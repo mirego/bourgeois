@@ -40,9 +40,9 @@ Then, you can use the `present` helper in your views to wrap `ActiveModel` (and 
 <% end %>
 ```
 
-Methods that aren’t in the presenter (`first_name` and `last_name`) are delegated to the presented object.
+Methods that aren’t in the presenter (`first_name` and `last_name`) are delegated to the presented object. You can also use the `view` method in the presenter to get the original view it was called in.
 
-## Inpiration
+## Inspiration
 
 Bourgeois was inspired by some code [@rafBM](https://twitter.com/rafBM) wrote for [his OpenCode talk](https://github.com/rafBM/opencode12-rails) on May 28th, 2013.
 
