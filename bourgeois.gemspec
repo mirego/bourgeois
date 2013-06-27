@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Bourgeois::VERSION
   spec.authors       = ['Rémi Prévost']
   spec.email         = ['rprevost@mirego.com']
-  spec.description   = ''
-  spec.summary       = ''
+  spec.description   = 'Bourgeois is a Ruby library that makes using presenters a very simple thing.'
+  spec.summary       = 'Bourgeois is a Ruby library that makes using presenters a very simple thing.'
   spec.homepage      = 'https://github.com/mirego/bourgeois'
   spec.license       = 'BSD 3-Clause'
 
