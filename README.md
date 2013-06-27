@@ -33,9 +33,7 @@ end
 Then, you can use the `present` helper in your views to wrap `ActiveModel` (and `ActiveRecord`) objects around a presenter:
 
 ```erb
-# app/view/users/show.erb
-
-<%= present(@user) do |user| %>
+<% present(@user) do |user| %>
   <p>This is <%= user.formatted_name %></p>
 <% end %>
 ```
