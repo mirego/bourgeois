@@ -1,5 +1,8 @@
 # Bourgeois
 
+[![Gem Version](https://badge.fury.io/rb/bourgeois.png)](https://rubygems.org/gems/bourgeois)
+[![Build Status](https://travis-ci.org/mirego/bourgeois.png?branch=master)](https://travis-ci.org/mirego/bourgeois)
+
 Bourgeois is a Ruby library that makes using presenters a very simple thing.
 
 ## Installation
