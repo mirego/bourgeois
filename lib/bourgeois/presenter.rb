@@ -1,6 +1,6 @@
 module Bourgeois
   class Presenter < ::SimpleDelegator
-    def initialize(object, view)
+    def initialize(object, view = nil)
       @view = view
       super(@object = object)
     end
