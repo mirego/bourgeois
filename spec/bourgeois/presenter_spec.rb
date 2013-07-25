@@ -23,24 +23,46 @@ describe Bourgeois::Presenter do
   end
 
   describe :InstanceMethods do
-    describe :view do
+    describe :initialize do
       before do
-        class UserPresenter < Bourgeois::Presenter
-          def local_name
-            view.t('users.attributes.local_name')
-          end
-        end
-
-        class ActionView::Base
-          def t(*args)
-            "Fancy translated string from #{args.join(', ')}"
-          end
-        end
-
+        class UserPresenter < Bourgeois::Presenter; end
         class User < OpenStruct; end
       end
 
-      it { expect(presenter.local_name).to eql 'Fancy translated string from users.attributes.local_name' }
+      it { expect{ UserPresenter.new(user) }.to_not raise_error }
+    end
+
+    describe :view do
+      context 'with present view' do
+        before do
+          class UserPresenter < Bourgeois::Presenter
+            def local_name
+              view.t('users.attributes.local_name')
+            end
+          end
+
+          class ActionView::Base
+            def t(*args)
+              "Fancy translated string from #{args.join(', ')}"
+            end
+          end
+
+          class User < OpenStruct; end
+        end
+
+        it { expect(presenter.local_name).to eql 'Fancy translated string from users.attributes.local_name' }
+      end
+
+      context 'with blank view' do
+        before do
+          class UserPresenter < Bourgeois::Presenter; end
+          class User < OpenStruct; end
+        end
+
+        let(:presenter) { UserPresenter.new(user) }
+
+        it { expect(presenter.instance_variable_get(:@view)).to be_nil }
+      end
     end
 
     describe :inspect do
