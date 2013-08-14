@@ -1,7 +1,7 @@
 <p align="center">
   <br />
   <a href="https://github.com/mirego/bourgeois">
-    <img src="http://i.imgur.com/qnFBH1O.png" alt="Bourgeois" />
+    <img src="http://i.imgur.com/Z8ja8Wz.png" alt="Bourgeois" />
   </a>
   <br />
   Bourgeois is a Ruby library that makes using presenters a very simple thing.
