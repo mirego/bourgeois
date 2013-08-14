@@ -4,5 +4,5 @@ require 'ostruct'
 require 'rspec'
 require 'bourgeois'
 
-RSpec.configure do |config|
-end
+# Inject our helper into ActionView
+ActionView::Base.class_eval(&Bourgeois.inject_into_action_view)
