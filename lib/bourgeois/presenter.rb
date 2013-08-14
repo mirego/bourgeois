@@ -33,6 +33,11 @@ module Bourgeois
       @view
     end
 
+    # Return the original delegated object
+    def object
+      @object
+    end
+
     # Return the original object class based on the presenter class name
     # We would be able to use `@object.class` but we need this in class methods
     def self.klass

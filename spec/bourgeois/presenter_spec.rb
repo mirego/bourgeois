@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Bourgeois::Presenter do
-  let(:user) { User.new first_name: 'Patrick', last_name: 'Bourgeois' }
+  let(:user) { User.new first_name: 'Patrick', last_name: 'Bourgeois', birthdate: '1962-06-16' }
   let(:view) { ActionView::Base.new }
   let(:presenter) { UserPresenter.new(user, view) }
 
@@ -10,6 +10,10 @@ describe Bourgeois::Presenter do
       class UserPresenter < Bourgeois::Presenter
         def formatted_name
           "#{first_name} #{last_name}".strip
+        end
+
+        def birthdate
+          super.presence || 'Unknown'
         end
       end
 
@@ -20,6 +24,7 @@ describe Bourgeois::Presenter do
     it { expect(presenter.formatted_name).to eql 'Patrick Bourgeois' }
     it { expect(presenter.first_name).to eql 'Patrick' }
     it { expect(presenter.last_name).to eql 'Bourgeois' }
+    it { expect(presenter.birthdate).to eql '1962-06-16' }
   end
 
   describe :InstanceMethods do
@@ -39,6 +44,10 @@ describe Bourgeois::Presenter do
             def local_name
               view.t('users.attributes.local_name')
             end
+
+            def first_name_in_bold
+              view.content_tag :strong, first_name
+            end
           end
 
           class ActionView::Base
@@ -51,6 +60,7 @@ describe Bourgeois::Presenter do
         end
 
         it { expect(presenter.local_name).to eql 'Fancy translated string from users.attributes.local_name' }
+        it { expect(presenter.first_name_in_bold).to eql '<strong>Patrick</strong>' }
       end
 
       context 'with blank view' do
@@ -63,6 +73,20 @@ describe Bourgeois::Presenter do
 
         it { expect(presenter.instance_variable_get(:@view)).to be_nil }
       end
+    end
+
+    describe :object do
+      before do
+        class UserPresenter < Bourgeois::Presenter
+          def birthdate
+            object.birthdate.gsub(/-/, '/')
+          end
+        end
+
+        class User < OpenStruct; end
+      end
+
+      it { expect(presenter.birthdate).to eql '1962/06/16' }
     end
 
     describe :inspect do

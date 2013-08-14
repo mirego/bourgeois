@@ -42,7 +42,18 @@ Then, you can use the `present` helper in your views to wrap `ActiveModel` (and 
 <% end %>
 ```
 
-Methods that aren’t in the presenter (`first_name` and `last_name`) are delegated to the presented object. You can also use the `view` method in the presenter to get the original view it was called in.
+Methods that aren’t in the presenter (`first_name` and `last_name`) are delegated to the presented object. You can also use the `view` method in the presenter to get the original view it was called in:
+
+```ruby
+# app/presenters/user_presenter.rb
+
+class UserPresenter < Bourgeois::Presenter
+  def birthdate
+    # To get the original `birthdate` value, you can either use `super` or `object.birthdate`
+    super.presence || view.content_tag(:em, 'Unknown')
+  end
+end
+```
 
 ## Inspiration
 
