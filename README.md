@@ -1,5 +1,4 @@
 <p align="center">
-  <br />
   <a href="https://github.com/mirego/bourgeois">
     <img src="http://i.imgur.com/Z8ja8Wz.png" alt="Bourgeois" />
   </a>
