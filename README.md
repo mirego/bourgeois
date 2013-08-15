@@ -11,6 +11,7 @@
   <a href="https://travis-ci.org/mirego/bourgeois"><img src="https://travis-ci.org/mirego/bourgeois.png?branch=master" /></a>
 </p>
 
+---
 
 ## Installation
 
