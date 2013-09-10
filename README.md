@@ -7,6 +7,8 @@
   <br /><br />
   <a href="https://rubygems.org/gems/bourgeois"><img src="https://badge.fury.io/rb/bourgeois.png" /></a>
   <a href="https://codeclimate.com/github/mirego/bourgeois"><img src="https://codeclimate.com/github/mirego/bourgeois.png" /></a>
+  <a href='https://coveralls.io/r/mirego/bourgeois?branch=master'><img src='https://coveralls.io/repos/mirego/bourgeois/badge.png?branch=master' /></a>
+  <a href='https://gemnasium.com/mirego/bourgeois'><img src="https://gemnasium.com/mirego/bourgeois.png" /></a>
   <a href="https://travis-ci.org/mirego/bourgeois"><img src="https://travis-ci.org/mirego/bourgeois.png?branch=master" /></a>
 </p>
 
