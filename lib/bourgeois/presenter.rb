@@ -26,6 +26,32 @@ module Bourgeois
       klass.human_attribute_name(*args)
     end
 
+    # Declare a new block helper method
+    #
+    # @example
+    #   class UserPresenter < Bourgeois::Presenter
+    #     helper :with_profile, if: -> { profile.present? }
+    #   end
+    #
+    #   presenter = UserPresenter.new(User.new(profile: 'Foo'))
+    #   presenter.with_profile do
+    #     puts 'User has a profile:'
+    #     puts presenter.profile
+    #   end
+    def self.helper(name, opts = {})
+      define_method(name) do |&block|
+        execute = if opts[:if]
+          self.instance_exec(&opts[:if])
+        elsif opts[:unless]
+          !self.instance_exec(&opts[:unless])
+        else
+          false
+        end
+
+        block.call if execute
+      end
+    end
+
   private
 
     # Return the view from where the presenter was created

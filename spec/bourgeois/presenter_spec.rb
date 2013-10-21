@@ -101,6 +101,80 @@ describe Bourgeois::Presenter do
   end
 
   describe :ClassMethods do
+    describe :helper do
+      before do
+        class UserPresenter < Bourgeois::Presenter
+          # Our helpers
+          helper :with_profile, if: -> { profile.present? }
+          helper :without_name, unless: -> { full_name.present? }
+          helper :with_something
+
+          # We need a method to test that our block is executed
+          attr_reader :foo
+        end
+      end
+
+      context 'with matching if condition' do
+        let(:user) { User.new profile: 'Je suis Patrick.' }
+
+        specify do
+          presenter.should_receive(:foo).once
+
+          presenter.with_profile do
+            presenter.foo
+          end
+        end
+      end
+
+      context 'with non-matching if condition' do
+        let(:user) { User.new profile: nil }
+
+        specify do
+          presenter.should_receive(:foo).never
+
+          presenter.with_profile do
+            presenter.foo
+          end
+        end
+      end
+
+      context 'with matching unless condition' do
+        let(:user) { User.new full_name: nil }
+
+        specify do
+          presenter.should_receive(:foo).once
+
+          presenter.without_name do
+            presenter.foo
+          end
+        end
+      end
+
+      context 'with non-matching unless condition' do
+        let(:user) { User.new full_name: 'Patrick Bourgeois' }
+
+        specify do
+          presenter.should_receive(:foo).never
+
+          presenter.without_name do
+            presenter.foo
+          end
+        end
+      end
+
+      context 'with helper without if nor unless' do
+        let(:user) { User.new }
+
+        specify do
+          presenter.should_receive(:foo).never
+
+          presenter.with_something do
+            presenter.foo
+          end
+        end
+      end
+    end
+
     describe :kind_of? do
       before do
         class UserPresenter < Bourgeois::Presenter; end
