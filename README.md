@@ -63,6 +63,31 @@ class UserPresenter < Bourgeois::Presenter
 end
 ```
 
+### Custom block helpers
+
+You can use the simple `helper` DSL to define block helpers that will be executed if certain
+conditions are matched.
+
+```ruby
+class UserPresenter < Bourgeois::Presenter
+  helper :with_profile, if: -> { profile.present? && profile.public? }
+end
+
+User.first.new = Profile.create(public: true, title: 'Foo', description: 'Bar')
+```
+
+```erb
+<% present User.first do |user| %>
+  <h1><%= user.full_name %></h1>
+  <% user.with_profile do %>
+    <div class="profile">
+      <h2><%= user.profile.title %></h2>
+      <%= simple_format(user.profile.description) %>
+    </div>
+  <% end %>
+<% end %>
+```
+
 ## Inspiration
 
 Bourgeois was inspired by some code [@rafBM](https://twitter.com/rafBM) wrote for [his OpenCode talk](https://github.com/rafBM/opencode12-rails) on May 28th, 2013.

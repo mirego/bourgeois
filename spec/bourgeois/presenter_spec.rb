@@ -101,6 +101,132 @@ describe Bourgeois::Presenter do
   end
 
   describe :ClassMethods do
+    describe :helper do
+      before do
+        class UserPresenter < Bourgeois::Presenter
+          # We need a method to test that our block is executed
+          attr_reader :foo
+        end
+      end
+
+      let(:call_it!) do
+        presenter.send(helper) do
+          presenter.foo
+        end
+      end
+
+      context 'with helper using only a if condition' do
+        before do
+          class UserPresenter
+            helper :with_profile, if: -> { profile.present? }
+          end
+        end
+
+        context 'with matching if condition' do
+          let(:user) { User.new profile: 'Je suis Patrick.' }
+          let(:helper) { :with_profile }
+
+          specify do
+            presenter.should_receive(:foo).once
+            call_it!
+          end
+        end
+
+        context 'with non-matching if condition' do
+          let(:user) { User.new profile: nil }
+          let(:helper) { :with_profile }
+
+          specify do
+            presenter.should_receive(:foo).never
+            call_it!
+          end
+        end
+      end
+
+      context 'with helper using only an unless condition' do
+        let(:helper) { :without_name }
+        before do
+          class UserPresenter
+            helper :without_name, unless: -> { full_name.present? }
+          end
+        end
+
+        context 'with matching unless condition' do
+          let(:user) { User.new full_name: nil }
+
+          specify do
+            presenter.should_receive(:foo).once
+            call_it!
+          end
+        end
+
+        context 'with non-matching unless condition' do
+          let(:user) { User.new full_name: 'Patrick Bourgeois' }
+
+          specify do
+            presenter.should_receive(:foo).never
+            call_it!
+          end
+        end
+      end
+
+      context 'with helper without if nor unless' do
+        let(:user) { User.new }
+        let(:helper) { :with_something }
+        before do
+          class UserPresenter
+            helper :with_something
+          end
+        end
+
+        specify do
+          presenter.should_receive(:foo).once
+          call_it!
+        end
+      end
+
+      context 'with helper using both matching and unless conditions' do
+        let(:helper) { :sometimes }
+        before do
+          class UserPresenter
+            helper :sometimes, if: -> { profile.present? }, unless: -> { full_name.present? }
+          end
+        end
+
+        context 'with matching if and non-matching unless condition' do
+          let(:user) { User.new(profile: true, full_name: 'Patrick Bourgeois') }
+          specify do
+            presenter.should_receive(:foo).never
+            call_it!
+          end
+        end
+
+        context 'with non-matching if and non-matching unless condition' do
+          let(:user) { User.new(profile: false, full_name: 'Patrick Bourgeois') }
+          specify do
+            presenter.should_receive(:foo).never
+            call_it!
+          end
+        end
+
+        context 'with matching if and matching unless condition' do
+          let(:user) { User.new(profile: true, full_name: nil) }
+          specify do
+            presenter.should_receive(:foo).once
+            call_it!
+          end
+        end
+
+        context 'with non-matching if and matching unless condition' do
+          let(:user) { User.new(profile: false, full_name: 'Patrick Bourgeois') }
+          specify do
+            presenter.should_receive(:foo).never
+            call_it!
+          end
+        end
+      end
+    end
+
     describe :kind_of? do
       before do
         class UserPresenter < Bourgeois::Presenter; end
