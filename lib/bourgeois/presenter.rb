@@ -40,12 +40,14 @@ module Bourgeois
     #   end
     def self.helper(name, opts = {})
       define_method(name) do |&block|
-        execute = if opts[:if]
-          self.instance_exec(&opts[:if])
-        elsif opts[:unless]
-          !self.instance_exec(&opts[:unless])
-        else
-          false
+        execute = true
+
+        if opts[:if]
+          execute = execute && self.instance_exec(&opts[:if])
+        end
+
+        if opts[:unless]
+          execute = execute && !self.instance_exec(&opts[:unless])
         end
 
         block.call if execute

@@ -107,6 +107,8 @@ describe Bourgeois::Presenter do
           # Our helpers
           helper :with_profile, if: -> { profile.present? }
           helper :without_name, unless: -> { full_name.present? }
+          helper :never, unless: -> { true }, if: -> { true }
+          helper :also_never, unless: -> { false }, if: -> { false }
           helper :with_something
 
           # We need a method to test that our block is executed
@@ -166,9 +168,33 @@ describe Bourgeois::Presenter do
         let(:user) { User.new }
 
         specify do
-          presenter.should_receive(:foo).never
+          presenter.should_receive(:foo).once
 
           presenter.with_something do
+            presenter.foo
+          end
+        end
+      end
+
+      context 'with matching if and non-matching unless conditions' do
+        let(:user) { User.new }
+
+        specify do
+          presenter.should_receive(:foo).never
+
+          presenter.never do
+            presenter.foo
+          end
+        end
+      end
+
+      context 'with non-matching if and matching unless conditions' do
+        let(:user) { User.new }
+
+        specify do
+          presenter.should_receive(:foo).never
+
+          presenter.also_never do
             presenter.foo
           end
         end
