@@ -5,7 +5,9 @@ describe Bourgeois::ViewHelper do
     let(:view) { ActionView::Base.new }
 
     before do
-      class UserPresenter < Bourgeois::Presenter
+      class UserPresenter
+        include Bourgeois::Presenter
+
         def formatted_name
           "#{first_name} #{last_name}".strip
         end

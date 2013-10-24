@@ -7,7 +7,9 @@ describe Bourgeois::Presenter do
 
   describe :DelegatedMethods do
     before do
-      class UserPresenter < Bourgeois::Presenter
+      class UserPresenter
+        include Bourgeois::Presenter
+
         def formatted_name
           "#{first_name} #{last_name}".strip
         end
@@ -25,12 +27,16 @@ describe Bourgeois::Presenter do
     it { expect(presenter.first_name).to eql 'Patrick' }
     it { expect(presenter.last_name).to eql 'Bourgeois' }
     it { expect(presenter.birthdate).to eql '1962-06-16' }
+    it { expect { presenter.foo }.to raise_error(NoMethodError) }
   end
 
   describe :InstanceMethods do
     describe :initialize do
       before do
-        class UserPresenter < Bourgeois::Presenter; end
+        class UserPresenter
+          include Bourgeois::Presenter
+        end
+
         class User < OpenStruct; end
       end
 
@@ -40,7 +46,9 @@ describe Bourgeois::Presenter do
     describe :view do
       context 'with present view' do
         before do
-          class UserPresenter < Bourgeois::Presenter
+          class UserPresenter
+            include Bourgeois::Presenter
+
             def local_name
               view.t('users.attributes.local_name')
             end
@@ -65,7 +73,10 @@ describe Bourgeois::Presenter do
 
       context 'with blank view' do
         before do
-          class UserPresenter < Bourgeois::Presenter; end
+          class UserPresenter
+            include Bourgeois::Presenter
+          end
+
           class User < OpenStruct; end
         end
 
@@ -77,7 +88,9 @@ describe Bourgeois::Presenter do
 
     describe :object do
       before do
-        class UserPresenter < Bourgeois::Presenter
+        class UserPresenter
+          include Bourgeois::Presenter
+
           def birthdate
             object.birthdate.gsub(/-/, '/')
           end
@@ -91,7 +104,10 @@ describe Bourgeois::Presenter do
 
     describe :inspect do
       before do
-        class UserPresenter < Bourgeois::Presenter; end
+        class UserPresenter
+          include Bourgeois::Presenter
+        end
+
         class User < OpenStruct; end
       end
       let(:user) { User.new foo: 'bar' }
@@ -103,7 +119,9 @@ describe Bourgeois::Presenter do
   describe :ClassMethods do
     describe :helper do
       before do
-        class UserPresenter < Bourgeois::Presenter
+        class UserPresenter
+          include Bourgeois::Presenter
+
           # We need a method to test that our block is executed
           attr_reader :foo
         end
@@ -229,7 +247,10 @@ describe Bourgeois::Presenter do
 
     describe :kind_of? do
       before do
-        class UserPresenter < Bourgeois::Presenter; end
+        class UserPresenter
+          include Bourgeois::Presenter
+        end
+
         class User < OpenStruct; end
       end
 
@@ -238,7 +259,10 @@ describe Bourgeois::Presenter do
 
     describe :model_name do
       before do
-        class UserPresenter < Bourgeois::Presenter; end
+        class UserPresenter
+          include Bourgeois::Presenter
+        end
+
         class User < OpenStruct; end
 
         User.should_receive(:model_name).and_return(:foo)
@@ -249,7 +273,10 @@ describe Bourgeois::Presenter do
 
     describe :human_attribute_name do
       before do
-        class UserPresenter < Bourgeois::Presenter; end
+        class UserPresenter
+          include Bourgeois::Presenter
+        end
+
         class User < OpenStruct; end
 
         User.should_receive(:human_attribute_name).and_return(:foo)
