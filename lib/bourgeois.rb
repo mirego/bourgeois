@@ -1,6 +1,6 @@
 require 'bourgeois/version'
 
-require 'active_support'
+require 'delegate'
 require 'active_model'
 require 'action_view'
 

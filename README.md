@@ -35,9 +35,7 @@ Create an `app/presenters` directory and put some presenters in it:
 ```ruby
 # app/presenters/user_presenter.rb
 
-class UserPresenter
-  include Bourgeois::Presenter
-
+class UserPresenter < Bourgeois::Presenter
   def formatted_name
     "#{first_name} #{last_name}".strip
   end
@@ -57,9 +55,7 @@ Methods that aren’t in the presenter (`first_name` and `last_name`) are delega
 ```ruby
 # app/presenters/user_presenter.rb
 
-class UserPresenter
-  include Bourgeois::Presenter
-
+class UserPresenter < Bourgeois::Presenter
   def birthdate
     # To get the original `birthdate` value, you can either use `super` or `object.birthdate`
     super.presence || view.content_tag(:em, 'Unknown')
@@ -73,9 +69,7 @@ You can use the simple `helper` DSL to define block helpers that will be execute
 conditions are matched.
 
 ```ruby
-class UserPresenter
-  include Bourgeois::Presenter
-
+class UserPresenter < Bourgeois::Presenter
   helper :with_profile, if: -> { profile.present? && profile.public? }
 end
 
