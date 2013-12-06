@@ -10,7 +10,6 @@ module Bourgeois
     def present(object, klass = nil, &blk)
       return object.map { |o| present(o, klass, &blk) } if object.respond_to?(:to_a)
 
-      presenter = nil
       if klass.blank?
         if object.is_a?(Bourgeois::Presenter)
           presenter = object
