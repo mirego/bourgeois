@@ -30,6 +30,23 @@ describe Bourgeois::ViewHelper do
       end
     end
 
+    context 'on a single already-presented resource' do
+      let(:user) { User.new first_name: 'Patrick', last_name: 'Bourgeois' }
+      let(:presenter) { UserPresenter.new(user) }
+
+      context 'without a block' do
+        it { expect(view.present(presenter).formatted_name).to eql 'Patrick Bourgeois' }
+      end
+
+      context 'with a block' do
+        specify do
+          view.present(user) do |u|
+            expect(u.formatted_name).to eql 'Patrick Bourgeois'
+          end
+        end
+      end
+    end
+
     context 'on a collection of resources' do
       let(:user1) { User.new first_name: 'Patrick', last_name: 'Bourgeois' }
       let(:user2) { User.new first_name: 'Francois', last_name: 'Jean' }
