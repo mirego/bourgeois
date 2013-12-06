@@ -11,15 +11,19 @@ module Bourgeois
       return object.map { |o| present(o, klass, &blk) } if object.respond_to?(:to_a)
 
       if klass.blank?
-        begin
-          klass_name = "#{object.class}Presenter"
-          klass = klass_name.constantize
-        rescue ::NameError
-          raise UnknownPresenter.new(klass_name)
+        if object.is_a?(Bourgeois::Presenter)
+          presenter = object
+        else
+          begin
+            klass_name = "#{object.class}Presenter"
+            klass = klass_name.constantize
+          rescue ::NameError
+            raise UnknownPresenter.new(klass_name)
+          end
         end
       end
 
-      presenter = klass.new(object, self)
+      presenter ||= klass.new(object, self)
       yield presenter if block_given?
 
       presenter
