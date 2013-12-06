@@ -61,6 +61,20 @@ describe Bourgeois::ViewHelper do
       end
     end
 
+    context 'on a collection of already-presented resources' do
+      let(:user1) { User.new first_name: 'Patrick', last_name: 'Bourgeois' }
+      let(:user2) { User.new first_name: 'Francois', last_name: 'Jean' }
+      let(:user3) { User.new first_name: 'Alain', last_name: 'Lapointe' }
+      let(:users) { [UserPresenter.new(user1), UserPresenter.new(user2), UserPresenter.new(user3)] }
+
+      specify do
+        output = []
+        view.present(users) { |u| output << u.formatted_name }
+
+        expect(output).to eql ['Patrick Bourgeois', 'Francois Jean', 'Alain Lapointe']
+      end
+    end
+
     context 'on a resource without a defined presenter class' do
       before do
         class Project < OpenStruct; end
