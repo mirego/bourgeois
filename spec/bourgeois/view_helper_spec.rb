@@ -40,7 +40,7 @@ describe Bourgeois::ViewHelper do
 
       context 'with a block' do
         specify do
-          view.present(user) do |u|
+          view.present(presenter) do |u|
             expect(u.formatted_name).to eql 'Patrick Bourgeois'
           end
         end
