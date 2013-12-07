@@ -73,7 +73,7 @@ class UserPresenter < Bourgeois::Presenter
   helper :with_profile, if: -> { profile.present? && profile.public? }
 end
 
-User.first.new = Profile.create(public: true, title: 'Foo', description: 'Bar')
+User.first.profile = Profile.create(public: true, title: 'Foo', description: 'Bar')
 ```
 
 ```erb
