@@ -40,17 +40,7 @@ module Bourgeois
     #   end
     def self.helper(name, opts = {})
       define_method(name) do |&block|
-        execute = true
-
-        if opts[:if]
-          execute = execute && self.instance_exec(&opts[:if])
-        end
-
-        if opts[:unless]
-          execute = execute && !self.instance_exec(&opts[:unless])
-        end
-
-        block.call if execute
+        execute_helper(block, opts)
       end
     end
 
@@ -70,6 +60,24 @@ module Bourgeois
     # We would be able to use `@object.class` but we need this in class methods
     def self.klass
       @klass ||= self.name.split(/Presenter$/).first.constantize
+    end
+
+    # Execute a helper block if it matches conditions
+    def execute_helper(block, opts)
+      if_condition = execute_helper_condition(opts[:if])
+      unless_condition = !execute_helper_condition(opts[:unless], false)
+
+      block.call if if_condition && unless_condition
+    end
+
+    # Execute a block within the context of the instance and return
+    # the result. Return a default value if the passed block is blank
+    def execute_helper_condition(block, default = true)
+      if block.blank?
+        default
+      else
+        self.instance_exec(&block)
+      end
     end
   end
 end
