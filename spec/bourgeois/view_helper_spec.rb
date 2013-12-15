@@ -15,9 +15,8 @@ describe Bourgeois::ViewHelper do
     end
 
     context 'on a Nil object' do
-
       context 'without a block' do
-        it { expect(view.present(nil)).not_to raise_error }
+        it { expect { view.present(nil) }.not_to raise_error }
       end
 
       context 'with a block' do
