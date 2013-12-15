@@ -20,9 +20,11 @@ describe Bourgeois::ViewHelper do
       end
 
       context 'with a block' do
+        before { UserPresenter.any_instance.should_receive(:formatted_name).never }
+
         specify do
           expect {
-            view.present(nil) { |obj| obj.object_id }
+            view.present(nil) { |obj| obj.formatted_name }
           }.not_to raise_error
         end
       end
