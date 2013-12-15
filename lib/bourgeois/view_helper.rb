@@ -8,6 +8,7 @@ module Bourgeois
     #     puts user.name # => Remi
     #   end
     def present(object, klass = nil, &blk)
+      return if object.nil?
       return object.map { |o| present(o, klass, &blk) } if object.respond_to?(:to_a)
 
       if klass.blank?

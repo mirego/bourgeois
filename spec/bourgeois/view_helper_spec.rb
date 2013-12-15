@@ -14,6 +14,21 @@ describe Bourgeois::ViewHelper do
       class User < OpenStruct; end
     end
 
+    context 'on a Nil object' do
+
+      context 'without a block' do
+        it { expect(view.present(nil)).not_to raise_error }
+      end
+
+      context 'with a block' do
+        specify do
+          expect {
+            view.present(nil) { |obj| obj.object_id }
+          }.not_to raise_error
+        end
+      end
+    end
+
     context 'on a single resource' do
       let(:user) { User.new first_name: 'Patrick', last_name: 'Bourgeois' }
 
