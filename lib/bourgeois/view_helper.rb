@@ -19,7 +19,7 @@ module Bourgeois
             klass_name = "#{object.class}Presenter"
             klass = klass_name.constantize
           rescue ::NameError
-            raise UnknownPresenter.new(klass_name)
+            raise UnknownPresenter, klass_name
           end
         end
       end
