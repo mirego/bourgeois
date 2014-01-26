@@ -34,7 +34,7 @@ describe Bourgeois::Presenter do
         class User < OpenStruct; end
       end
 
-      it { expect{ UserPresenter.new(user) }.to_not raise_error }
+      it { expect { UserPresenter.new(user) }.to_not raise_error }
     end
 
     describe :view do

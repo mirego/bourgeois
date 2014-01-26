@@ -10,7 +10,7 @@ require 'bourgeois/view_helper'
 
 module Bourgeois
   def self.inject_into_action_view
-    @inject_into_action_view ||= Proc.new do
+    @inject_into_action_view ||= proc do
       ActionView::Base.send(:include, ViewHelper)
     end
   end

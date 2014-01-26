@@ -47,19 +47,15 @@ module Bourgeois
   private
 
     # Return the view from where the presenter was created
-    def view
-      @view
-    end
+    attr_reader :view
 
     # Return the original delegated object
-    def object
-      @object
-    end
+    attr_reader :object
 
     # Return the original object class based on the presenter class name
     # We would be able to use `@object.class` but we need this in class methods
     def self.klass
-      @klass ||= self.name.split(/Presenter$/).first.constantize
+      @klass ||= name.split(/Presenter$/).first.constantize
     end
 
     # Execute a helper block if it matches conditions
@@ -76,7 +72,7 @@ module Bourgeois
       if block.blank?
         default
       else
-        self.instance_exec(&block)
+        instance_exec(&block)
       end
     end
   end

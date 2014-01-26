@@ -23,9 +23,9 @@ describe Bourgeois::ViewHelper do
         before { UserPresenter.any_instance.should_receive(:formatted_name).never }
 
         specify do
-          expect {
+          expect do
             view.present(nil) { |obj| obj.formatted_name }
-          }.not_to raise_error
+          end.not_to raise_error
         end
       end
     end

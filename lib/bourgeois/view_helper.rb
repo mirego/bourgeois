@@ -11,23 +11,23 @@ module Bourgeois
       return if object.nil?
       return object.map { |o| present(o, klass, &blk) } if object.respond_to?(:to_a)
 
-      if klass.blank?
-        if object.is_a?(Bourgeois::Presenter)
-          presenter = object
-        else
-          begin
-            klass_name = "#{object.class}Presenter"
-            klass = klass_name.constantize
-          rescue ::NameError
-            raise UnknownPresenter, klass_name
-          end
-        end
+      if object.is_a?(Bourgeois::Presenter)
+        presenter = object
+      else
+        klass ||= ViewHelper.presenter_class(object)
       end
 
       presenter ||= klass.new(object, self)
       yield presenter if block_given?
 
       presenter
+    end
+
+    def self.presenter_class(object)
+      klass_name = "#{object.class}Presenter"
+      klass_name.constantize
+    rescue ::NameError
+      raise UnknownPresenter, klass_name
     end
   end
 end
