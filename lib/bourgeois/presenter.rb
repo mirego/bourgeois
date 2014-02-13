@@ -1,5 +1,8 @@
 module Bourgeois
   class Presenter < ::SimpleDelegator
+    # Return the original delegated object
+    attr_reader :object
+
     def initialize(object, view = nil)
       @view = view
       super(@object = object)
@@ -48,9 +51,6 @@ module Bourgeois
 
     # Return the view from where the presenter was created
     attr_reader :view
-
-    # Return the original delegated object
-    attr_reader :object
 
     # Return the original object class based on the presenter class name
     # We would be able to use `@object.class` but we need this in class methods
