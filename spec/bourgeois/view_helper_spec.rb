@@ -117,6 +117,24 @@ describe Bourgeois::ViewHelper do
       it { expect(presented_article.name).to eql 'LES B.B.' }
     end
 
+    context 'on a Struct-based resource' do
+      before do
+        class Band < Struct.new(:name)
+        end
+
+        class BandPresenter < Bourgeois::Presenter
+          def name
+            super.upcase
+          end
+        end
+      end
+
+      let(:band) { Band.new('Les B.B.') }
+      let(:presented_band) { view.present(band) }
+
+      it { expect(presented_band.name).to eql 'LES B.B.' }
+    end
+
     context 'on a collection of resources with a custom presenter class' do
       before do
         class Article < OpenStruct; end
