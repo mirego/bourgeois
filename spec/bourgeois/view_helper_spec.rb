@@ -99,5 +99,42 @@ describe Bourgeois::ViewHelper do
       let(:project) { Project.new name: 'Les B.B.' }
       it { expect { view.present(project) }.to raise_error(Bourgeois::UnknownPresenter, 'unknown presenter class ProjectPresenter') }
     end
+
+    context 'on a resource with a custom presenter class' do
+      before do
+        class Article < OpenStruct; end
+        class CustomArticlePresenter < Bourgeois::Presenter
+          def name
+            super.upcase
+          end
+        end
+      end
+
+      let(:article) { Article.new name: 'Les B.B.' }
+      let(:presented_article) { view.present(article, CustomArticlePresenter) }
+
+      it { expect { presented_article }.not_to raise_error }
+      it { expect(presented_article.name).to eql 'LES B.B.' }
+    end
+
+    context 'on a collection of resources with a custom presenter class' do
+      before do
+        class Article < OpenStruct; end
+        class CustomArticlePresenter < Bourgeois::Presenter
+          def name
+            super.upcase
+          end
+        end
+      end
+
+      let(:articles) { [Article.new(name: 'Les B.B.'), Article.new(name: 'Rock et Belles Oreilles')] }
+
+      specify do
+        output = []
+        view.present(articles, CustomArticlePresenter) { |u| output << u.name }
+
+        expect(output).to eql ['LES B.B.', 'ROCK ET BELLES OREILLES']
+      end
+    end
   end
 end
