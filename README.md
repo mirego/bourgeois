@@ -5,11 +5,11 @@
   <br />
   Bourgeois is a Ruby library that makes using presenters a very simple thing.
   <br /><br />
-  <a href="https://rubygems.org/gems/bourgeois"><img src="https://badge.fury.io/rb/bourgeois.png" /></a>
-  <a href="https://codeclimate.com/github/mirego/bourgeois"><img src="https://codeclimate.com/github/mirego/bourgeois.png" /></a>
-  <a href='https://coveralls.io/r/mirego/bourgeois?branch=master'><img src='https://coveralls.io/repos/mirego/bourgeois/badge.png?branch=master' /></a>
-  <a href='https://gemnasium.com/mirego/bourgeois'><img src="https://gemnasium.com/mirego/bourgeois.png" /></a>
-  <a href="https://travis-ci.org/mirego/bourgeois"><img src="https://travis-ci.org/mirego/bourgeois.png?branch=master" /></a>
+  <a href="https://rubygems.org/gems/bourgeois"><img src="http://img.shields.io/gem/v/bourgeois.svg" /></a>
+  <a href="https://codeclimate.com/github/mirego/bourgeois"><img src="http://img.shields.io/codeclimate/github/mirego/bourgeois.svg" /></a>
+  <a href='https://coveralls.io/r/mirego/bourgeois?branch=master'><img src="http://img.shields.io/coveralls/mirego/bourgeois.svg" /></a>
+  <a href='https://gemnasium.com/mirego/bourgeois'><img src="http://img.shields.io/gemnasium/mirego/bourgeois.svg" /></a>
+  <a href="https://travis-ci.org/mirego/bourgeois"><img src="http://img.shields.io/travis/mirego/bourgeois.svg" /></a>
 </p>
 
 ---
