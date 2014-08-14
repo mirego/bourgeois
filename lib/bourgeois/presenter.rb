@@ -47,6 +47,29 @@ module Bourgeois
       end
     end
 
+    # Wrap a resource or a collection into its related presenter
+    #
+    # @example
+    #   present User.new(name: 'Remi') do |user|
+    #     puts user.inspect # => #<UserPresenter object=#<User name="Remi>>
+    #     puts user.name # => Remi
+    #   end
+    def self.present(object, klass = self, &blk)
+      return if object.nil?
+      return object.map { |o| present(o, klass, &blk) } if object.respond_to?(:to_a) && !object.is_a?(Struct)
+
+      if object.is_a?(Bourgeois::Presenter)
+        presenter = object
+      else
+        klass ||= presenter_class(object)
+      end
+
+      presenter ||= klass.new(object, self)
+      yield presenter if block_given?
+
+      presenter
+    end
+
   private
 
     # Return the view from where the presenter was created
@@ -56,6 +79,13 @@ module Bourgeois
     # We would be able to use `@object.class` but we need this in class methods
     def self.klass
       @klass ||= name.split(/Presenter$/).first.constantize
+    end
+
+    def self.presenter_class(object)
+      klass_name = "#{object.class}Presenter"
+      klass_name.constantize
+    rescue ::NameError
+      raise UnknownPresenter, klass_name
     end
 
     # Execute a helper block if it matches conditions
