@@ -54,7 +54,7 @@ module Bourgeois
     #     puts user.inspect # => #<UserPresenter object=#<User name="Remi>>
     #     puts user.name # => Remi
     #   end
-    def self.present(object, klass = nil, &blk)
+    def self.present(object, klass = nil, view = nil, &blk)
       return if object.nil?
       return object.map { |o| present(o, klass, &blk) } if object.respond_to?(:to_a) && !object.is_a?(Struct)
 
@@ -64,7 +64,7 @@ module Bourgeois
         klass ||= presenter_class(object)
       end
 
-      presenter ||= klass.new(object, self)
+      presenter ||= klass.new(object, view)
       yield presenter if block_given?
 
       presenter
