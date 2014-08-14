@@ -54,7 +54,7 @@ module Bourgeois
     #     puts user.inspect # => #<UserPresenter object=#<User name="Remi>>
     #     puts user.name # => Remi
     #   end
-    def self.present(object, klass = self, &blk)
+    def self.present(object, klass = nil, &blk)
       return if object.nil?
       return object.map { |o| present(o, klass, &blk) } if object.respond_to?(:to_a) && !object.is_a?(Struct)
 

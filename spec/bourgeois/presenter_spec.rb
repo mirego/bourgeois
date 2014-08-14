@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe Bourgeois::Presenter do
   let(:user) { User.new first_name: 'Patrick', last_name: 'Bourgeois', birthdate: '1962-06-16' }
-  let(:view) { ActionView::Base.new }
-  let(:presenter) { UserPresenter.new(user, view) }
+  let(:presenter) { UserPresenter.new(user) }
 
   describe :DelegatedMethods do
     before do
@@ -38,6 +37,9 @@ describe Bourgeois::Presenter do
     end
 
     describe :view do
+      let(:view) { ActionView::Base.new }
+      let(:presenter) { UserPresenter.new(user, view) }
+
       context 'with present view' do
         before do
           class UserPresenter < Bourgeois::Presenter
@@ -259,8 +261,6 @@ describe Bourgeois::Presenter do
     end
 
     describe :present do
-      let(:view) { ActionView::Base.new }
-
       before do
         class UserPresenter < Bourgeois::Presenter
           def formatted_name
@@ -273,7 +273,7 @@ describe Bourgeois::Presenter do
 
       context 'on a Nil object' do
         context 'without a block' do
-          it { expect { view.present(nil) }.not_to raise_error }
+          it { expect { Bourgeois::Presenter.present(nil) }.not_to raise_error }
         end
 
         context 'with a block' do
@@ -281,7 +281,7 @@ describe Bourgeois::Presenter do
 
           specify do
             expect do
-              view.present(nil) { |obj| obj.formatted_name }
+              Bourgeois::Presenter.present(nil) { |obj| obj.formatted_name }
             end.not_to raise_error
           end
         end
@@ -291,12 +291,12 @@ describe Bourgeois::Presenter do
         let(:user) { User.new first_name: 'Patrick', last_name: 'Bourgeois' }
 
         context 'without a block' do
-          it { expect(view.present(user).formatted_name).to eql 'Patrick Bourgeois' }
+          it { expect(Bourgeois::Presenter.present(user).formatted_name).to eql 'Patrick Bourgeois' }
         end
 
         context 'with a block' do
           specify do
-            view.present(user) do |u|
+            Bourgeois::Presenter.present(user) do |u|
               expect(u.formatted_name).to eql 'Patrick Bourgeois'
             end
           end
@@ -308,12 +308,12 @@ describe Bourgeois::Presenter do
         let(:presenter) { UserPresenter.new(user) }
 
         context 'without a block' do
-          it { expect(view.present(presenter).formatted_name).to eql 'Patrick Bourgeois' }
+          it { expect(Bourgeois::Presenter.present(presenter).formatted_name).to eql 'Patrick Bourgeois' }
         end
 
         context 'with a block' do
           specify do
-            view.present(presenter) do |u|
+            Bourgeois::Presenter.present(presenter) do |u|
               expect(u.formatted_name).to eql 'Patrick Bourgeois'
             end
           end
@@ -328,7 +328,7 @@ describe Bourgeois::Presenter do
 
         specify do
           output = []
-          view.present(users) { |u| output << u.formatted_name }
+          Bourgeois::Presenter.present(users) { |u| output << u.formatted_name }
 
           expect(output).to eql ['Patrick Bourgeois', 'Francois Jean', 'Alain Lapointe']
         end
@@ -342,7 +342,7 @@ describe Bourgeois::Presenter do
 
         specify do
           output = []
-          view.present(users) { |u| output << u.formatted_name }
+          Bourgeois::Presenter.present(users) { |u| output << u.formatted_name }
 
           expect(output).to eql ['Patrick Bourgeois', 'Francois Jean', 'Alain Lapointe']
         end
@@ -354,7 +354,7 @@ describe Bourgeois::Presenter do
         end
 
         let(:project) { Project.new name: 'Les B.B.' }
-        it { expect { view.present(project) }.to raise_error(Bourgeois::UnknownPresenter, 'unknown presenter class ProjectPresenter') }
+        it { expect { Bourgeois::Presenter.present(project) }.to raise_error(Bourgeois::UnknownPresenter, 'unknown presenter class ProjectPresenter') }
       end
 
       context 'on a resource with a custom presenter class' do
@@ -368,7 +368,7 @@ describe Bourgeois::Presenter do
         end
 
         let(:article) { Article.new name: 'Les B.B.' }
-        let(:presented_article) { view.present(article, CustomArticlePresenter) }
+        let(:presented_article) { Bourgeois::Presenter.present(article, CustomArticlePresenter) }
 
         it { expect { presented_article }.not_to raise_error }
         it { expect(presented_article.name).to eql 'LES B.B.' }
@@ -387,7 +387,7 @@ describe Bourgeois::Presenter do
         end
 
         let(:band) { Band.new('Les B.B.') }
-        let(:presented_band) { view.present(band) }
+        let(:presented_band) { Bourgeois::Presenter.present(band) }
 
         it { expect(presented_band.name).to eql 'LES B.B.' }
       end
@@ -406,7 +406,7 @@ describe Bourgeois::Presenter do
 
         specify do
           output = []
-          view.present(articles, CustomArticlePresenter) { |u| output << u.name }
+          Bourgeois::Presenter.present(articles, CustomArticlePresenter) { |u| output << u.name }
 
           expect(output).to eql ['LES B.B.', 'ROCK ET BELLES OREILLES']
         end
