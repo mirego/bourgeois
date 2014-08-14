@@ -56,7 +56,7 @@ module Bourgeois
     #   end
     def self.present(object, klass = nil, view = nil, &blk)
       return if object.nil?
-      return object.map { |o| present(o, klass, &blk) } if object.respond_to?(:to_a) && !object.is_a?(Struct)
+      return object.map { |o| present(o, klass, view, &blk) } if object.respond_to?(:to_a) && !object.is_a?(Struct)
 
       if object.is_a?(Bourgeois::Presenter)
         presenter = object
