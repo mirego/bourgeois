@@ -129,7 +129,7 @@ describe Bourgeois::Presenter do
           let(:helper) { :with_profile }
 
           specify do
-            presenter.should_receive(:foo).once
+            expect(presenter).to receive(:foo).once
             call_it!
           end
         end
@@ -139,7 +139,7 @@ describe Bourgeois::Presenter do
           let(:helper) { :with_profile }
 
           specify do
-            presenter.should_receive(:foo).never
+            expect(presenter).to receive(:foo).never
             call_it!
           end
         end
@@ -157,7 +157,7 @@ describe Bourgeois::Presenter do
           let(:user) { User.new full_name: nil }
 
           specify do
-            presenter.should_receive(:foo).once
+            expect(presenter).to receive(:foo).once
             call_it!
           end
         end
@@ -166,7 +166,7 @@ describe Bourgeois::Presenter do
           let(:user) { User.new full_name: 'Patrick Bourgeois' }
 
           specify do
-            presenter.should_receive(:foo).never
+            expect(presenter).to receive(:foo).never
             call_it!
           end
         end
@@ -182,7 +182,7 @@ describe Bourgeois::Presenter do
         end
 
         specify do
-          presenter.should_receive(:foo).once
+          expect(presenter).to receive(:foo).once
           call_it!
         end
       end
@@ -198,7 +198,7 @@ describe Bourgeois::Presenter do
         context 'with matching if and non-matching unless condition' do
           let(:user) { User.new(profile: true, full_name: 'Patrick Bourgeois') }
           specify do
-            presenter.should_receive(:foo).never
+            expect(presenter).to receive(:foo).never
             call_it!
           end
         end
@@ -206,7 +206,7 @@ describe Bourgeois::Presenter do
         context 'with non-matching if and non-matching unless condition' do
           let(:user) { User.new(profile: false, full_name: 'Patrick Bourgeois') }
           specify do
-            presenter.should_receive(:foo).never
+            expect(presenter).to receive(:foo).never
             call_it!
           end
         end
@@ -214,7 +214,7 @@ describe Bourgeois::Presenter do
         context 'with matching if and matching unless condition' do
           let(:user) { User.new(profile: true, full_name: nil) }
           specify do
-            presenter.should_receive(:foo).once
+            expect(presenter).to receive(:foo).once
             call_it!
           end
         end
@@ -222,7 +222,7 @@ describe Bourgeois::Presenter do
         context 'with non-matching if and matching unless condition' do
           let(:user) { User.new(profile: false, full_name: 'Patrick Bourgeois') }
           specify do
-            presenter.should_receive(:foo).never
+            expect(presenter).to receive(:foo).never
             call_it!
           end
         end
@@ -243,7 +243,7 @@ describe Bourgeois::Presenter do
         class UserPresenter < Bourgeois::Presenter; end
         class User < OpenStruct; end
 
-        User.should_receive(:model_name).and_return(:foo)
+        expect(User).to receive(:model_name).and_return(:foo)
       end
 
       it { expect(UserPresenter.model_name).to eql :foo }
@@ -254,7 +254,7 @@ describe Bourgeois::Presenter do
         class UserPresenter < Bourgeois::Presenter; end
         class User < OpenStruct; end
 
-        User.should_receive(:human_attribute_name).and_return(:foo)
+        expect(User).to receive(:human_attribute_name).and_return(:foo)
       end
 
       it { expect(UserPresenter.human_attribute_name).to eql :foo }
@@ -277,11 +277,12 @@ describe Bourgeois::Presenter do
         end
 
         context 'with a block' do
-          before { UserPresenter.any_instance.should_receive(:formatted_name).never }
+          let(:mock) { double }
+          before { expect(mock).not_to receive(:some_method) }
 
           specify do
             expect do
-              Bourgeois::Presenter.present(nil) { |obj| obj.formatted_name }
+              Bourgeois::Presenter.present(nil) { |obj| mock.some_method }
             end.not_to raise_error
           end
         end
