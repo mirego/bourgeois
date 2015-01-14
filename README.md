@@ -7,7 +7,6 @@
   <br /><br />
   <a href="https://rubygems.org/gems/bourgeois"><img src="http://img.shields.io/gem/v/bourgeois.svg" /></a>
   <a href="https://codeclimate.com/github/mirego/bourgeois"><img src="http://img.shields.io/codeclimate/github/mirego/bourgeois.svg" /></a>
-  <a href='https://coveralls.io/r/mirego/bourgeois?branch=master'><img src="http://img.shields.io/coveralls/mirego/bourgeois.svg" /></a>
   <a href='https://gemnasium.com/mirego/bourgeois'><img src="http://img.shields.io/gemnasium/mirego/bourgeois.svg" /></a>
   <a href="https://travis-ci.org/mirego/bourgeois"><img src="http://img.shields.io/travis/mirego/bourgeois.svg" /></a>
 </p>
@@ -94,7 +93,7 @@ Bourgeois was inspired by some code [@rafBM](https://twitter.com/rafBM) wrote fo
 
 ## License
 
-`Bourgeois` is © 2013-2014 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause).  See the [`LICENSE.md`](https://github.com/mirego/bourgeois/blob/master/LICENSE.md) file.
+`Bourgeois` is © 2013-2015 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause).  See the [`LICENSE.md`](https://github.com/mirego/bourgeois/blob/master/LICENSE.md) file.
 
 ## About Mirego
 
