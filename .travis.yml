@@ -1,8 +1,12 @@
 language: ruby
 
 rvm:
-  - 2.0.0
+  - 2.3
+  - 2.1
+  - 2.0
   - 1.9.3
+
+sudo: false
 
 gemfile:
   - gemfiles/Gemfile.activemodel-4.0
