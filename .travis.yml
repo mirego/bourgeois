@@ -1,14 +1,15 @@
 language: ruby
 
 rvm:
-  - 2.1
-  - 2.0
-  - 1.9.3
+  - 2.2.8
+  - 2.3.5
+  - 2.4.2
 
 sudo: false
 
 gemfile:
-  - gemfiles/Gemfile.activemodel-4.0
+  - gemfiles/Gemfile.activemodel-5.1
+  - gemfiles/Gemfile.activemodel-4.2
   - gemfiles/Gemfile.activemodel-3.2.x
 
 script: "echo 'DO IT' && bundle exec rake spec"
