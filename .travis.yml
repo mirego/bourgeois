@@ -8,7 +8,8 @@ rvm:
 sudo: false
 
 gemfile:
-  - gemfiles/Gemfile.activemodel-4.0
+  - gemfiles/Gemfile.activemodel-5.1
+  - gemfiles/Gemfile.activemodel-4.2
   - gemfiles/Gemfile.activemodel-3.2.x
 
 script: "echo 'DO IT' && bundle exec rake spec"
