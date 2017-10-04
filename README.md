@@ -93,7 +93,7 @@ Bourgeois was inspired by some code [@rafBM](https://twitter.com/rafBM) wrote fo
 
 ## License
 
-`Bourgeois` is © 2013-2015 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause).  See the [`LICENSE.md`](https://github.com/mirego/bourgeois/blob/master/LICENSE.md) file.
+`Bourgeois` is © 2013-2017 [Mirego](http://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause).  See the [`LICENSE.md`](https://github.com/mirego/bourgeois/blob/master/LICENSE.md) file.
 
 ## About Mirego
 
